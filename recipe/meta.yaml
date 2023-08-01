@@ -1,21 +1,21 @@
-{% set version = "6.2" %}
+{% set name = "tornado" %}
+{% set version = "6.3.2" %}
 
 package:
-  name: tornado
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/t/tornado/tornado-{{ version }}.tar.gz
-  sha256: 9b630419bde84ec666bfd7ea0a4cb2a8a651c2d5cccdbdd1972a0c859dfc3c13
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tornado-{{ version }}.tar.gz
+  sha256: 4b927c4f19b71e627b13f3db2324e4ae660527143f9e1f2e2fb404f3a187e2ba
 
 build:
+  skip: true  # [py<38]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
   number: 0
-  skip: true  # [py<37]
-  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
   host:
     - python
@@ -42,7 +42,6 @@ about:
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
-  license_url: https://www.apache.org/licenses/LICENSE-2.0
   summary: A Python web framework and asynchronous networking library, originally developed at FriendFeed.
   description: |
     Tornado is a Python web framework and asynchronous networking library.
@@ -50,7 +49,6 @@ about:
     of open connections, making it ideal for long polling, WebSockets, and
     other applications that require a long-lived connection to each user.
   doc_url: https://www.tornadoweb.org/en/stable/
-  doc_source_url: https://github.com/tornadoweb/tornado/blob/stable/docs/index.rst
   dev_url: https://github.com/tornadoweb/tornado
 
 extra:

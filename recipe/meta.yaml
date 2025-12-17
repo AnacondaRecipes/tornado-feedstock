@@ -1,5 +1,5 @@
 {% set name = "tornado" %}
-{% set version = "6.5.1" %}
+{% set version = "6.5.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/tornado-{{ version }}.tar.gz
-  sha256: 84ceece391e8eb9b2b95578db65e920d2a61070260594819589609ba9bc6308c
+  sha256: 16abdeb0211796ffc73765bc0a20119712d68afeeaf93d1a3f2edf6b3aee8d5a
 
 build:
   number: 0

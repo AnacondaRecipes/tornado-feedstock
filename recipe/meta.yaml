@@ -1,13 +1,13 @@
 {% set name = "tornado" %}
-{% set version = "6.5.8" %}
+{% set version = "6.5.10" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/tornado-{{ version }}.tar.gz
-  sha256: 9452e1b208a8bd771e2cb1f2ff564985b9b214bdebbe622793e1799e0a6bd23f
+  sha256: a6b1ccd08c04b4a06fb5aeb381be99de5ad1e5375c1785e31d78c880feb57687
 
 build:
   number: 0
@@ -30,12 +30,57 @@ test:
     - pip
   commands:
     - pip check
+    # Upstream test suite is run via tornado.testing/unittest, not pytest.
+    - python -bb -m tornado.test  # [not win]
+    # Upstream disables fail-if-logs on Windows due to occasional platform-specific
+    # log/stderr messages: https://github.com/tornadoweb/tornado/commit/734f397782e6d94ccc2ad83607d01cd3cd090839
+    - python -bb -m tornado.test --fail-if-logs=false  # [win]
   imports:
     - tornado
     - tornado.platform
     - tornado.test
+    # from test file imports
+    - tornado
+    - tornado.auth
+    - tornado.autoreload
+    - tornado.concurrent
+    # requires pycurl
+    #- tornado.curl_httpclient
+    - tornado.escape
     - tornado.gen
+    - tornado.http1connection
+    - tornado.httpclient
+    - tornado.httpserver
+    - tornado.httputil
+    - tornado.ioloop
+    - tornado.iostream
+    - tornado.locale
+    - tornado.locks
+    - tornado.log
     - tornado.netutil
+    - tornado.options
+    - tornado.platform.asyncio
+    # requires pycares
+    #- tornado.platform.caresresolver
+    # requires twisted
+    #- tornado.platform.twisted
+    - tornado.process
+    - tornado.queues
+    - tornado.routing
+    - tornado.simple_httpclient
+    - tornado.tcpclient
+    - tornado.tcpserver
+    - tornado.template
+    - tornado.test
+    - tornado.test.httpclient_test
+    - tornado.test.options_test
+    - tornado.test.runtests
+    - tornado.test.util
+    - tornado.testing
+    - tornado.util
+    - tornado.web
+    - tornado.websocket
+    - tornado.wsgi
 
 about:
   home: https://www.tornadoweb.org/

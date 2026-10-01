@@ -30,6 +30,11 @@ test:
     - pip
   commands:
     - pip check
+    # Upstream test suite is run via tornado.testing/unittest, not pytest.
+    - python -bb -m tornado.test  # [not win]
+    # Upstream disables fail-if-logs on Windows due to occasional platform-specific
+    # log/stderr messages: https://github.com/tornadoweb/tornado/commit/734f397782e6d94ccc2ad83607d01cd3cd090839
+    - python -bb -m tornado.test --fail-if-logs=false  # [win]
   imports:
     - tornado
     - tornado.platform

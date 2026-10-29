@@ -1,12 +1,14 @@
 {% set name = "tornado" %}
 {% set version = "6.6.0" %}
+# Upstream release version is "6.6"; the published sdist is tornado-6.6.tar.gz.
+{% set sdist_version = "6.6" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/tornado-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/tornado-{{ sdist_version }}.tar.gz
   sha256: 34c4aa916d7f2b2d5cadee2c6850f5a4a7f3d688cbf58399ea9bd3057af4abd5
 
 build:
@@ -32,16 +34,12 @@ test:
   commands:
     - pip check
     # Upstream test suite is run via tornado.testing/unittest, not pytest.
-    - python -bb -m tornado.test  # [not win]
-    # Upstream disables fail-if-logs on Windows due to occasional platform-specific
-    # log/stderr messages: https://github.com/tornadoweb/tornado/commit/734f397782e6d94ccc2ad83607d01cd3cd090839
-    - python -bb -m tornado.test --fail-if-logs=false  # [win]
+    - python -bb -m tornado.test
   imports:
     - tornado
     - tornado.platform
     - tornado.test
     # from test file imports
-    - tornado
     - tornado.auth
     - tornado.autoreload
     - tornado.concurrent
@@ -72,7 +70,6 @@ test:
     - tornado.tcpclient
     - tornado.tcpserver
     - tornado.template
-    - tornado.test
     - tornado.test.httpclient_test
     - tornado.test.options_test
     - tornado.test.runtests

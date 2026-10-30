@@ -1,14 +1,12 @@
 {% set name = "tornado" %}
-{% set version = "6.6.0" %}
-# Upstream release version is "6.6"; the published sdist is tornado-6.6.tar.gz.
-{% set sdist_version = "6.6" %}
+{% set version = "6.6" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/tornado-{{ sdist_version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/tornado-{{ version }}.tar.gz
   sha256: 34c4aa916d7f2b2d5cadee2c6850f5a4a7f3d688cbf58399ea9bd3057af4abd5
 
 build:
